@@ -22,7 +22,7 @@ statement
     | functionDefinition
     | block
     | coutStatement
-    | classDefinition  // Agregar definición de clase como una declaración
+    | classDefinition  // Definición de clase
     ;
 
 // Declaraciones
@@ -38,14 +38,11 @@ returnStatement: RETURN expression? SEMI;
 
 // Definición de funciones
 functionDefinition: type ID LPAREN parameterList? RPAREN block;
-
 parameterList: type ID (COMMA type ID)*;
 block: LBRACE statement* RBRACE;
 
 // Definición de clases
 classDefinition: 'class' ID LBRACE classMember* RBRACE;
-
-// Miembros de la clase (atributos y métodos)
 classMember: (declaration | functionDefinition);
 
 // Creación de objetos
@@ -72,11 +69,19 @@ expression
     | memberAccess                     # MemberAccessExpr
     ;
 
-// **Soporte para `std::cout << "texto";`**
+// Soporte para `std::cout << "texto";`
 coutStatement: SCOPE? STD SCOPE COUT (STREAM_OUT expression)+ SEMI;
 
+// ----------------------
+// Reglas Léxicas
+// ----------------------
 
-// **Tokens definidos en el lexer**
+// 1. Comentarios y espacios (se descartan)
+LINE_COMMENT: '//' ~[\r\n]* -> skip;
+BLOCK_COMMENT: '/*' .*? '*/' -> skip;
+WS: [ \t\r\n]+ -> skip;
+
+// 2. Reglas para palabras reservadas y operadores
 IF: 'if';
 ELSE: 'else';
 WHILE: 'while';
@@ -88,7 +93,6 @@ CHAR: 'char';
 VOID: 'void';
 STRING: 'string';
 
-// Operadores y símbolos
 ASSIGN: '=';
 PLUS: '+';
 MINUS: '-';
@@ -108,8 +112,8 @@ NOT: '!';
 SEMI: ';';
 COMMA: ',';
 DOT: '.';
-SCOPE: '::'; // **Resolución de ámbito (`std::cout`)**
-STREAM_OUT: '<<'; // **Soporte para `cout << "texto"`**
+SCOPE: '::';
+STREAM_OUT: '<<';
 LPAREN: '(';
 RPAREN: ')';
 LBRACE: '{';
@@ -117,23 +121,43 @@ RBRACE: '}';
 LBRACK: '[';
 RBRACK: ']';
 
-// **Corrección de Identificadores**
+// 3. Identificadores y palabras especiales
 ID: [a-zA-Z_][a-zA-Z0-9_]*
-    { !isKeyword(getText()) }?; // Evita palabras clave como identificadores
-
-// **Corrección de `std` y `cout`**
+    { !isKeyword(getText()) }?;
 STD: 'std';
 COUT: 'cout';
 
-// **Corrección de STRING_LITERAL**
-STRING_LITERAL: '"' (~["\r\n])* '"';
+// 4. Literales y números
+// Regla para cadenas mal formadas (se coloca primero para capturar cadenas abiertas sin cierre)
+UNCLOSED_STRING: '"' (~["\r\n])* {
+    LexerNoViableAltException e = new LexerNoViableAltException(this, _input, _tokenStartCharIndex, null);
+    notifyListeners(e);
+    skip();
+} ;
 
-// **Corrección de NUMBER**
+Regla para cadenas bien formadas
+STRING_LITERAL: '"' (~["\r\n])* '"' ;
+
+// Número mal formado (por ejemplo, con punto sin dígito siguiente)
+INVALID_NUMBER: [0-9]+ '.' {
+    LexerNoViableAltException e = new LexerNoViableAltException(this, _input, _tokenStartCharIndex, null);
+    notifyListeners(e);
+    skip();
+} ;
+
+// Número correcto
 NUMBER: [0-9]+ ('.' [0-9]+)?;
 
-// **Comentarios**
-LINE_COMMENT: '//' ~[\r\n]* -> skip;
-BLOCK_COMMENT: '/*' .*? '*/' -> skip;
+// Regla para identificadores mal formados (por ejemplo, que empiecen con dígito)
+INVALID_ID: [0-9][a-zA-Z0-9_]* {
+    LexerNoViableAltException e = new LexerNoViableAltException(this, _input, _tokenStartCharIndex, null);
+    notifyListeners(e);
+    skip();
+} ;
 
-// **Espacios en blanco**
-WS: [ \t\r\n]+ -> skip;
+// 5. Regla para capturar cualquier otro carácter no reconocido
+ERROR_CHAR: . {
+    LexerNoViableAltException e = new LexerNoViableAltException(this, _input, _tokenStartCharIndex, null);
+    notifyListeners(e);
+    skip();
+} ;

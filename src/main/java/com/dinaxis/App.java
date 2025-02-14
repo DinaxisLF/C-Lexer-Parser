@@ -5,7 +5,12 @@ import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
-
+/*
+Andrade Pérez Robin Axel
+Alvarado Gutierrez Araceli
+Lomeli Flores Cesar
+Trujillo Madrigal Víctor Adrián
+ */
 @CommandLine.Command(name = "C++ Interpreter", mixinStandardHelpOptions = true, version =  "0.0.1", description = "C++ ALTNR4 Analizador")
 public class App implements Callable<Integer> {
 
@@ -13,8 +18,11 @@ public class App implements Callable<Integer> {
     public Integer call() throws Exception{
         String input = "";
         Scanner scanner = new Scanner(System.in);
-
+        System.out.println(" Andrade Pérez Robin Axel \n Alvarado Gutierrez Araceli \n Lomeli Flores Cesar \n Trujillo Madrigal Víctor Adrián\n"
+        );
         do{
+
+
           System.out.println("Ingresa una cadena> ");
           input = scanner.nextLine();
 
@@ -26,6 +34,9 @@ public class App implements Callable<Integer> {
 
             // Crear el parser
             CPPParser parser = new CPPParser(tokenStream);
+            //Añadir
+            parser.removeErrorListeners();
+            parser.addErrorListener(new SyntaxErrorListener());
 
             // Llamar a la regla inicial para obtener el árbol sintáctico
             ParseTree tree = parser.program(); // Suponiendo que 'program' es tu regla inicial
