@@ -35,7 +35,7 @@ public class App implements Callable<Integer> {
             System.out.println(tree.toStringTree(parser));
 
         }while(!input.equals("exit"));
-
+            scanner.close();
             return 0;
     }
 
