@@ -5,7 +5,8 @@ grammar CPP;
         return text.equals("if") || text.equals("else") || text.equals("while") ||
                text.equals("return") || text.equals("int") || text.equals("float") ||
                text.equals("double") || text.equals("char") || text.equals("void") ||
-               text.equals("string") || text.equals("cout") || text.equals("std");
+               text.equals("string") || text.equals("cout") || text.equals("std") ||
+               text.equals("for"); //agreguee fooooor
     }
 }
 
@@ -18,6 +19,7 @@ statement
     | expressionStatement
     | ifStatement
     | whileStatement
+    | forStatement         // Agregar el fooooooor aquiiiii
     | returnStatement
     | functionDefinition
     | block
@@ -35,6 +37,8 @@ expressionStatement: (ID ASSIGN expression | expression) SEMI;
 ifStatement: IF LPAREN expression RPAREN statement (ELSE statement)?;
 whileStatement: WHILE LPAREN expression RPAREN statement;
 returnStatement: RETURN expression? SEMI;
+
+forStatement: 'for' '(' expressionStatement expressionStatement expressionStatement ')' statement; //fooooor
 
 // Definición de funciones
 functionDefinition: type ID LPAREN parameterList? RPAREN block;
@@ -85,6 +89,7 @@ WS: [ \t\r\n]+ -> skip;
 IF: 'if';
 ELSE: 'else';
 WHILE: 'while';
+FOR: 'for';           // Agregar la palabra reservada foooooor
 RETURN: 'return';
 INT: 'int';
 FLOAT: 'float';
