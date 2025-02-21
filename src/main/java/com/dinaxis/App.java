@@ -8,7 +8,10 @@ import picocli.CommandLine;
 
 @CommandLine.Command(name = "C++ Interpreter", mixinStandardHelpOptions = true, version =  "0.0.1", description = "C++ ALTNR4 Analizador")
 public class App implements Callable<Integer> {
-
+    // Andrade Perez Robin Axel
+    // Alvarado Gutierrez Araceli
+    // Lomeli Flores Cesar
+    // Trujillo Madrigal Victor Adrian
     @Override
     public Integer call() throws Exception{
         String input = "";
@@ -27,11 +30,11 @@ public class App implements Callable<Integer> {
             // Crear el parser
             CPPParser parser = new CPPParser(tokenStream);
 
-            // Llamar a la regla inicial para obtener el árbol sintáctico
+            // Llamar a la regla inicial para obtener el arbol sintactico
             ParseTree tree = parser.program(); // Suponiendo que 'program' es tu regla inicial
 
-            // Imprimir el árbol sintáctico
-            System.out.println("Árbol sintáctico:");
+            // Imprimir el arbol sintactico
+            System.out.println("Arbol sintactico:");
             System.out.println(tree.toStringTree(parser));
 
         }while(!input.equals("exit"));
@@ -40,6 +43,10 @@ public class App implements Callable<Integer> {
     }
 
     public static void main(String[] args) {
+        System.out.println("// Andrade Perez Robin Axel\n" + //
+                        "    // Alvarado Gutierrez Araceli\n" + //
+                        "    // Lomeli Flores Cesar\n" + //
+                        "    // Trujillo Madrigal Victor Adrian");
         int exit = new CommandLine(new App()).execute(args);
         System.exit(exit);
     }

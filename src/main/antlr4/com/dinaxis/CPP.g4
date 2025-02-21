@@ -88,7 +88,7 @@ CHAR: 'char';
 VOID: 'void';
 STRING: 'string';
 
-// Operadores y símbolos
+// Operadores y simbolos
 ASSIGN: '=';
 PLUS: '+';
 MINUS: '-';
