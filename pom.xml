@@ -81,48 +81,14 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>antlr4</goal> <!-- Correct goal -->
+							<goal>antlr4</goal>
 						</goals>
 						<configuration>
-							<sourceDirectory>src/main/antlr4</sourceDirectory> <!-- Correct path -->
+							<sourceDirectory>src/main/antlr4</sourceDirectory>
 						</configuration>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.2.0</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>com.dinaxis.App</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
-		<plugin>
-			<artifactId>maven-assembly-plugin</artifactId>
-			<version>3.3.0</version>
-			<configuration>
-				<descriptorRefs>
-					<descriptorRef>jar-with-dependencies</descriptorRef>
-				</descriptorRefs>
-				<archive>
-					<manifest>
-						<mainClass>com.dinaxis.App</mainClass>
-					</manifest>
-				</archive>
-			</configuration>
-			<executions>
-				<execution>
-					<id>make-assembly</id>
-					<phase>package</phase>
-					<goals>
-						<goal>single</goal>
-					</goals>
-				</execution>
-			</executions>
-		</plugin>
 		</plugins>
 	</build>
 
