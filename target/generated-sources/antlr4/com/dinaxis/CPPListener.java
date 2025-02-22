@@ -1,4 +1,4 @@
-// Generated from com/dinaxis/CPP.g4 by ANTLR 4.9.3
+// Generated from com\dinaxis\CPP.g4 by ANTLR 4.9.3
 package com.dinaxis;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -77,6 +77,16 @@ public interface CPPListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReturnStatement(CPPParser.ReturnStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link CPPParser#forStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForStatement(CPPParser.ForStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link CPPParser#forStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForStatement(CPPParser.ForStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CPPParser#functionDefinition}.
 	 * @param ctx the parse tree

@@ -1,4 +1,4 @@
-// Generated from com/dinaxis/CPP.g4 by ANTLR 4.9.3
+// Generated from com\dinaxis\CPP.g4 by ANTLR 4.9.3
 package com.dinaxis;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -95,6 +95,18 @@ public class CPPBaseListener implements CPPListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitReturnStatement(CPPParser.ReturnStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForStatement(CPPParser.ForStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForStatement(CPPParser.ForStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
